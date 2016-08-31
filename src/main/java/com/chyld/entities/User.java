@@ -25,6 +25,7 @@ public class User implements UserDetails {
     private List<Role> roles;
     private Date created;
     private Date modified;
+    private Profile profile;
 
     @Id
     @GeneratedValue
@@ -78,4 +79,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {return this.enabled;}
     public void setEnabled(boolean enabled) {this.enabled = enabled;}
+
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @JoinTable(name = "profile",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 }

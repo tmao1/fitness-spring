@@ -1,9 +1,11 @@
 package com.chyld.controllers;
 
 import com.chyld.dtos.AuthDto;
+import com.chyld.entities.Profile;
 import com.chyld.entities.Role;
 import com.chyld.entities.User;
 import com.chyld.enums.RoleEnum;
+import com.chyld.security.JwtToken;
 import com.chyld.utilities.JwtUtil;
 import com.chyld.services.RoleService;
 import com.chyld.services.UserService;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 
 @RestController
@@ -61,4 +64,23 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(null);
     }
+
+    @RequestMapping(value = "/users/profile", method = RequestMethod.POST)
+    public ResponseEntity<?> createProfile(@Valid @RequestBody Profile profile, Principal user) throws JsonProcessingException {
+
+
+            int uid = ((JwtToken)user).getUserId();
+            User u = userService.findUserById(uid);
+
+        if(u.getProfile() != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+                    u.setProfile(profile);
+            profile.setUser(u);
+            userService.saveUser(u);
+return ResponseEntity.status(HttpStatus.CREATED).body(null);
+
+
+    }
+
 }
