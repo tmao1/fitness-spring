@@ -25,6 +25,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public JwtLoginFilter(String defaultFilterProcessesUrl, JwtUtil jwtUtil, UserDetailsService userDetailsService, AuthenticationManager authManager) {
         super(defaultFilterProcessesUrl);
+
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
         setAuthenticationManager(authManager);

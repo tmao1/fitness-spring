@@ -5,6 +5,7 @@ import com.chyld.utilities.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 
 @Component
+
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtUtil jwtUtil;
 
